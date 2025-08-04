@@ -9,7 +9,6 @@ import { BarChart3, TrendingUp, Users, DollarSign, Download, Calendar } from "lu
 import { format, startOfMonth, endOfMonth, subMonths } from "date-fns";
 import { ru } from "date-fns/locale";
 
-
 type ReportType = "revenue" | "employees" | "services" | "clients";
 
 export default function ReportsPage() {
@@ -68,12 +67,12 @@ export default function ReportsPage() {
         return (
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+              <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-gray-600">Общая выручка</p>
-                      <p className="text-2xl font-bold text-gray-900">
+                      <p className="text-sm font-medium text-gray-700 text-shadow">Общая выручка</p>
+                      <p className="text-2xl font-bold text-gray-900 text-shadow">
                         {mockRevenueData.reduce((sum, item) => sum + item.revenue, 0).toLocaleString()} ₽
                       </p>
                     </div>
@@ -82,12 +81,12 @@ export default function ReportsPage() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+              <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-gray-600">Средний чек</p>
-                      <p className="text-2xl font-bold text-gray-900">
+                      <p className="text-sm font-medium text-gray-700 text-shadow">Средний чек</p>
+                      <p className="text-2xl font-bold text-gray-900 text-shadow">
                         {Math.round(
                           mockRevenueData.reduce((sum, item) => sum + item.revenue, 0) /
                           mockRevenueData.reduce((sum, item) => sum + item.orders, 0)
@@ -99,12 +98,12 @@ export default function ReportsPage() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+              <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-gray-600">Заказов</p>
-                      <p className="text-2xl font-bold text-gray-900">
+                      <p className="text-sm font-medium text-gray-700 text-shadow">Заказов</p>
+                      <p className="text-2xl font-bold text-gray-900 text-shadow">
                         {mockRevenueData.reduce((sum, item) => sum + item.orders, 0)}
                       </p>
                     </div>
@@ -114,9 +113,9 @@ export default function ReportsPage() {
               </Card>
             </div>
 
-            <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+            <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
               <CardHeader>
-                <CardTitle>Ежедневная выручка</CardTitle>
+                <CardTitle className="text-shadow">Ежедневная выручка</CardTitle>
               </CardHeader>
               <CardContent>
                 <Table>
@@ -146,9 +145,9 @@ export default function ReportsPage() {
 
       case "employees":
         return (
-          <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+          <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
             <CardHeader>
-              <CardTitle>Отчет по сотрудникам</CardTitle>
+              <CardTitle className="text-shadow">Отчет по сотрудникам</CardTitle>
             </CardHeader>
             <CardContent>
               <Table>
@@ -183,9 +182,9 @@ export default function ReportsPage() {
 
       case "services":
         return (
-          <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+          <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
             <CardHeader>
-              <CardTitle>Отчет по услугам</CardTitle>
+              <CardTitle className="text-shadow">Отчет по услугам</CardTitle>
             </CardHeader>
             <CardContent>
               <Table>
@@ -221,12 +220,12 @@ export default function ReportsPage() {
 
       case "clients":
         return (
-          <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+          <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
             <CardHeader>
-              <CardTitle>Отчет по клиентам</CardTitle>
+              <CardTitle className="text-shadow">Отчет по клиентам</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-center py-8 text-gray-500">
+              <div className="text-center py-8 text-gray-500 text-shadow">
                 Отчет по клиентам в разработке
               </div>
             </CardContent>
@@ -241,14 +240,14 @@ export default function ReportsPage() {
   return (
     <div className="space-y-6">
       {/* Заголовок и управление */}
-      <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+      <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-2xl font-semibold text-gray-900">
+              <CardTitle className="text-2xl font-semibold text-gray-900 text-shadow-lg">
                 Отчёты и аналитика
               </CardTitle>
-              <p className="text-gray-600 mt-1">
+              <p className="text-gray-700 mt-1 text-shadow">
                 Период: {currentPeriod.label}
               </p>
             </div>
@@ -266,11 +265,11 @@ export default function ReportsPage() {
       </Card>
 
       {/* Фильтры */}
-      <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+      <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
         <CardContent className="p-6">
           <div className="flex items-center space-x-4">
             <div className="flex-1">
-              <label className="text-sm font-medium text-gray-700 mb-2 block">
+              <label className="text-sm font-medium text-gray-700 mb-2 block text-shadow">
                 Тип отчета
               </label>
               <Select value={reportType} onValueChange={(value: ReportType) => setReportType(value)}>
@@ -287,7 +286,7 @@ export default function ReportsPage() {
             </div>
 
             <div className="flex-1">
-              <label className="text-sm font-medium text-gray-700 mb-2 block">
+              <label className="text-sm font-medium text-gray-700 mb-2 block text-shadow">
                 Период
               </label>
               <Select value={period} onValueChange={setPeriod}>

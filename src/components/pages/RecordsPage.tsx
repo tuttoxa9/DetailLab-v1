@@ -71,14 +71,15 @@ export default function RecordsPage() {
 
   return (
     <div className="space-y-6">
-      <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+      {/* Заголовок и управление */}
+      <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-2xl font-semibold text-gray-900">
+              <CardTitle className="text-2xl font-semibold text-gray-900 text-shadow-lg">
                 Записи на мойку
               </CardTitle>
-              <p className="text-gray-600 mt-1">
+              <p className="text-gray-700 mt-1 text-shadow">
                 Управление предварительными записями клиентов
               </p>
             </div>
@@ -114,10 +115,11 @@ export default function RecordsPage() {
       </Card>
 
       {viewMode === "list" ? (
-        <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+        /* Режим списка */
+        <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
           <CardHeader>
-            <CardTitle className="text-lg">Список записей</CardTitle>
-            <p className="text-sm text-gray-600">
+            <CardTitle className="text-lg text-shadow">Список записей</CardTitle>
+            <p className="text-sm text-gray-700 text-shadow">
               {format(selectedDate, "d MMMM yyyy", { locale: ru })}
             </p>
           </CardHeader>
@@ -181,10 +183,11 @@ export default function RecordsPage() {
           </CardContent>
         </Card>
       ) : (
+        /* Режим календаря */
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+          <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
             <CardHeader>
-              <CardTitle className="text-lg">Календарь записей</CardTitle>
+              <CardTitle className="text-lg text-shadow">Календарь записей</CardTitle>
             </CardHeader>
             <CardContent>
               <Calendar
@@ -197,9 +200,9 @@ export default function RecordsPage() {
           </Card>
 
           <div className="lg:col-span-2">
-            <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+            <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
               <CardHeader>
-                <CardTitle className="text-lg">
+                <CardTitle className="text-lg text-shadow">
                   Записи на {format(selectedDate, "d MMMM yyyy", { locale: ru })}
                 </CardTitle>
               </CardHeader>

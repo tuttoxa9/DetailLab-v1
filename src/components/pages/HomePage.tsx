@@ -73,14 +73,14 @@ export default function HomePage() {
   return (
     <div className="space-y-6">
       {/* Заголовок и управление */}
-      <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+      <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-2xl font-semibold text-gray-900">
+              <CardTitle className="text-2xl font-semibold text-gray-900 text-shadow-lg">
                 Ведомость ежедневная
               </CardTitle>
-              <p className="text-gray-600 mt-1">
+              <p className="text-gray-700 mt-1 text-shadow">
                 {format(selectedDate, "d MMMM yyyy", { locale: ru })}
               </p>
             </div>
@@ -104,9 +104,9 @@ export default function HomePage() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Календарь и управление */}
         <div className="space-y-4">
-          <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+          <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
             <CardHeader>
-              <CardTitle className="text-lg">Выбор даты</CardTitle>
+              <CardTitle className="text-lg text-shadow">Выбор даты</CardTitle>
             </CardHeader>
             <CardContent>
               <Calendar
@@ -118,9 +118,9 @@ export default function HomePage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+          <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
             <CardHeader>
-              <CardTitle className="text-lg">Смена</CardTitle>
+              <CardTitle className="text-lg text-shadow">Смена</CardTitle>
             </CardHeader>
             <CardContent>
               <Select value={selectedShift} onValueChange={(value: "all" | "morning" | "evening") => setSelectedShift(value)}>
@@ -141,12 +141,12 @@ export default function HomePage() {
         <div className="lg:col-span-3 space-y-6">
           {/* Статистика */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+            <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">Выручка</p>
-                    <p className="text-2xl font-bold text-gray-900">
+                    <p className="text-sm font-medium text-gray-700 text-shadow">Выручка</p>
+                    <p className="text-2xl font-bold text-gray-900 text-shadow">
                       {totalRevenue.toLocaleString()} ₽
                     </p>
                   </div>
@@ -157,12 +157,12 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+            <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">Зарплаты</p>
-                    <p className="text-2xl font-bold text-gray-900">
+                    <p className="text-sm font-medium text-gray-700 text-shadow">Зарплаты</p>
+                    <p className="text-2xl font-bold text-gray-900 text-shadow">
                       {totalSalaries.toLocaleString()} ₽
                     </p>
                   </div>
@@ -173,12 +173,12 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+            <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">Сотрудников</p>
-                    <p className="text-2xl font-bold text-gray-900">{uniqueEmployees}</p>
+                    <p className="text-sm font-medium text-gray-700 text-shadow">Сотрудников</p>
+                    <p className="text-2xl font-bold text-gray-900 text-shadow">{uniqueEmployees}</p>
                   </div>
                   <div className="p-3 bg-purple-100 rounded-full">
                     <TrendingUp className="w-6 h-6 text-purple-600" />
@@ -189,9 +189,9 @@ export default function HomePage() {
           </div>
 
           {/* Таблица записей */}
-          <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+          <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
             <CardHeader>
-              <CardTitle className="text-lg">Выполненные работы</CardTitle>
+              <CardTitle className="text-lg text-shadow">Выполненные работы</CardTitle>
             </CardHeader>
             <CardContent>
               <Table>

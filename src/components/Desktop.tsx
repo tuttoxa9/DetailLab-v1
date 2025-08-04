@@ -42,17 +42,14 @@ export default function Desktop() {
       }}
     >
       {/* Overlay для лучшей читаемости */}
-      <div className="absolute inset-0 bg-white bg-opacity-50 backdrop-blur-xl"></div>
+      <div className="absolute inset-0 bg-black bg-opacity-20 backdrop-blur-xl"></div>
 
       {/* Верхняя панель меню в стиле macOS */}
-      <div className="relative z-10 bg-white bg-opacity-80 backdrop-blur-md border-b border-gray-200">
+      <div className="relative z-10 bg-white bg-opacity-60 backdrop-blur-md border-b border-gray-200">
         <div className="px-6 py-3 flex items-center justify-between">
           <div className="flex items-center space-x-1">
-            {/* Кнопки управления окном */}
             <div className="flex space-x-2">
-              {/* <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-green-500 rounded-full"></div> */}
+
             </div>
             <div className="ml-4 font-semibold text-gray-800">Detail Lab</div>
           </div>

@@ -101,7 +101,7 @@ export default function SettingsPage() {
   if (!hasAccess) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg w-96">
+        <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none w-96">
           <CardHeader className="text-center">
             <div className="flex justify-center mb-4">
               <div className="p-3 bg-red-100 rounded-full">
@@ -109,7 +109,7 @@ export default function SettingsPage() {
               </div>
             </div>
             <CardTitle className="text-xl">Доступ к настройкам</CardTitle>
-            <p className="text-gray-600 text-sm">
+            <p className="text-gray-700 text-sm text-shadow">
               Для входа в настройки требуется дополнительный пароль
             </p>
           </CardHeader>
@@ -148,17 +148,17 @@ export default function SettingsPage() {
     switch (activeTab) {
       case "appearance":
         return (
-          <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+          <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
             <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
+              <CardTitle className="flex items-center space-x-2 text-shadow">
                 <Palette className="w-5 h-5" />
                 <span>Внешний вид</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
-                <Label className="text-base font-medium">Тема оформления</Label>
-                <p className="text-sm text-gray-600 mb-3">
+                <Label className="text-base font-medium text-shadow">Тема оформления</Label>
+                <p className="text-sm text-gray-700 mb-3 text-shadow">
                   Выберите тему интерфейса приложения
                 </p>
                 <Select value={theme} onValueChange={(value: "light" | "dark" | "black") => setTheme(value)}>
@@ -182,10 +182,10 @@ export default function SettingsPage() {
 
       case "employees":
         return (
-          <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+          <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
             <CardHeader>
               <div className="flex items-center justify-between">
-                <CardTitle className="flex items-center space-x-2">
+                <CardTitle className="flex items-center space-x-2 text-shadow">
                   <Users className="w-5 h-5" />
                   <span>Сотрудники</span>
                 </CardTitle>
@@ -248,10 +248,10 @@ export default function SettingsPage() {
 
       case "services":
         return (
-          <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+          <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
             <CardHeader>
               <div className="flex items-center justify-between">
-                <CardTitle className="flex items-center space-x-2">
+                <CardTitle className="flex items-center space-x-2 text-shadow">
                   <Settings className="w-5 h-5" />
                   <span>Услуги</span>
                 </CardTitle>
@@ -307,10 +307,10 @@ export default function SettingsPage() {
 
       case "organizations":
         return (
-          <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+          <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
             <CardHeader>
               <div className="flex items-center justify-between">
-                <CardTitle className="flex items-center space-x-2">
+                <CardTitle className="flex items-center space-x-2 text-shadow">
                   <Users className="w-5 h-5" />
                   <span>Организации</span>
                 </CardTitle>
@@ -366,14 +366,14 @@ export default function SettingsPage() {
   return (
     <div className="space-y-6">
       {/* Заголовок */}
-      <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+      <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-2xl font-semibold text-gray-900">
+              <CardTitle className="text-2xl font-semibold text-gray-900 text-shadow-lg">
                 Настройки системы
               </CardTitle>
-              <p className="text-gray-600 mt-1">
+              <p className="text-gray-700 mt-1 text-shadow">
                 Управление параметрами приложения
               </p>
             </div>
@@ -389,7 +389,7 @@ export default function SettingsPage() {
       </Card>
 
       {/* Вкладки */}
-      <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
+      <Card className="bg-white/60 backdrop-blur-xl shadow-lg border-none">
         <CardContent className="p-0">
           <div className="flex border-b">
             <button
