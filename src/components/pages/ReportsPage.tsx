@@ -272,7 +272,7 @@ export default function ReportsPage() {
               <label className="text-sm font-medium text-gray-700 mb-2 block">
                 Тип отчета
               </label>
-              <Select value={reportType} onValueChange={(value: any) => setReportType(value)}>
+              <Select value={reportType} onValueChange={(value: string) => setReportType(value)}>
                 <SelectTrigger className="w-full">
                   <SelectValue />
                 </SelectTrigger>
