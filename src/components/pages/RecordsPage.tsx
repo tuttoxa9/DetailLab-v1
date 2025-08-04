@@ -1,6 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import {
+  collection,
+  query,
+  onSnapshot,
+  Timestamp,
+} from "firebase/firestore";
+import { db } from "@/lib/firebase";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -15,37 +22,26 @@ type ViewMode = "list" | "calendar";
 export default function RecordsPage() {
   const [viewMode, setViewMode] = useState<ViewMode>("list");
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
 
-  // Моковые данные
-  const mockAppointments: Appointment[] = [
-    {
-      id: "1",
-      date: new Date(),
-      time: "10:00",
-      clientName: "Алексей Иванов",
-      clientPhone: "+7 (999) 123-45-67",
-      serviceId: "svc1",
-      serviceName: "Комплексная мойка",
-      employeeId: "emp1",
-      employeeName: "Иван Петров",
-      status: "scheduled",
-      notes: "Просьба уделить особое внимание дискам",
-      createdAt: new Date(),
-    },
-    {
-      id: "2",
-      date: new Date(),
-      time: "14:30",
-      clientName: "Мария Петрова",
-      clientPhone: "+7 (999) 987-65-43",
-      serviceId: "svc2",
-      serviceName: "Химчистка салона",
-      employeeId: "emp2",
-      employeeName: "Анна Смирнова",
-      status: "completed",
-      createdAt: new Date(),
-    },
-  ];
+  useEffect(() => {
+    const q = query(collection(db, "appointments"));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const appointmentsData: Appointment[] = [];
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        appointmentsData.push({
+          id: doc.id,
+          ...data,
+          date: (data.date as Timestamp).toDate(),
+          createdAt: (data.createdAt as Timestamp).toDate(),
+        } as Appointment);
+      });
+      setAppointments(appointmentsData);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -75,7 +71,6 @@ export default function RecordsPage() {
 
   return (
     <div className="space-y-6">
-      {/* Заголовок и управление */}
       <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
         <CardHeader>
           <div className="flex items-center justify-between">
@@ -88,7 +83,6 @@ export default function RecordsPage() {
               </p>
             </div>
             <div className="flex items-center space-x-3">
-              {/* Переключатель режимов */}
               <div className="flex bg-gray-100 rounded-lg p-1">
                 <Button
                   variant={viewMode === "list" ? "default" : "ghost"}
@@ -120,7 +114,6 @@ export default function RecordsPage() {
       </Card>
 
       {viewMode === "list" ? (
-        /* Режим списка */
         <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
           <CardHeader>
             <CardTitle className="text-lg">Список записей</CardTitle>
@@ -142,48 +135,52 @@ export default function RecordsPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {mockAppointments.map((appointment) => (
-                  <TableRow key={appointment.id}>
-                    <TableCell className="font-medium">
-                      <div className="flex items-center space-x-2">
-                        <Clock className="w-4 h-4 text-gray-500" />
-                        <span>{appointment.time}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center space-x-2">
-                        <User className="w-4 h-4 text-gray-500" />
-                        <span>{appointment.clientName}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center space-x-2">
-                        <Phone className="w-4 h-4 text-gray-500" />
-                        <span>{appointment.clientPhone}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell>{appointment.serviceName}</TableCell>
-                    <TableCell>{appointment.employeeName}</TableCell>
-                    <TableCell>
-                      <span
-                        className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
-                          appointment.status
-                        )}`}
-                      >
-                        {getStatusText(appointment.status)}
-                      </span>
-                    </TableCell>
-                    <TableCell className="max-w-xs truncate">
-                      {appointment.notes || "—"}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {appointments
+                  .filter(
+                    (appointment) =>
+                      appointment.date.toDateString() === selectedDate.toDateString()
+                  )
+                  .map((appointment) => (
+                    <TableRow key={appointment.id}>
+                      <TableCell className="font-medium">
+                        <div className="flex items-center space-x-2">
+                          <Clock className="w-4 h-4 text-gray-500" />
+                          <span>{appointment.time}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center space-x-2">
+                          <User className="w-4 h-4 text-gray-500" />
+                          <span>{appointment.clientName}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center space-x-2">
+                          <Phone className="w-4 h-4 text-gray-500" />
+                          <span>{appointment.clientPhone}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell>{appointment.serviceName}</TableCell>
+                      <TableCell>{appointment.employeeName}</TableCell>
+                      <TableCell>
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
+                            appointment.status
+                          )}`}
+                        >
+                          {getStatusText(appointment.status)}
+                        </span>
+                      </TableCell>
+                      <TableCell className="max-w-xs truncate">
+                        {appointment.notes || "—"}
+                      </TableCell>
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
           </CardContent>
         </Card>
       ) : (
-        /* Режим календаря */
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Card className="bg-white bg-opacity-95 backdrop-blur-md shadow-lg">
             <CardHeader>
@@ -208,63 +205,84 @@ export default function RecordsPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {mockAppointments.map((appointment) => (
-                    <div
-                      key={appointment.id}
-                      className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
-                    >
-                      <div className="flex items-start justify-between">
-                        <div className="space-y-2">
-                          <div className="flex items-center space-x-3">
-                            <span className="font-semibold text-lg">
-                              {appointment.time}
-                            </span>
-                            <span
-                              className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
-                                appointment.status
-                              )}`}
+                  {appointments
+                    .filter(
+                      (appointment) =>
+                        appointment.date.toDateString() ===
+                        selectedDate.toDateString()
+                    )
+                    .map((appointment) => (
+                      <div
+                        key={appointment.id}
+                        className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+                      >
+                        <div className="flex items-start justify-between">
+                          <div className="space-y-2">
+                            <div className="flex items-center space-x-3">
+                              <span className="font-semibold text-lg">
+                                {appointment.time}
+                              </span>
+                              <span
+                                className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
+                                  appointment.status
+                                )}`}
+                              >
+                                {getStatusText(appointment.status)}
+                              </span>
+                            </div>
+
+                            <div className="text-gray-900">
+                              <p className="font-medium">{appointment.clientName}</p>
+                              <p className="text-sm text-gray-600">
+                                {appointment.clientPhone}
+                              </p>
+                            </div>
+
+                            <div className="text-sm">
+                              <p>
+                                <span className="font-medium">Услуга:</span>{" "}
+                                {appointment.serviceName}
+                              </p>
+                              <p>
+                                <span className="font-medium">Мастер:</span>{" "}
+                                {appointment.employeeName}
+                              </p>
+                              {appointment.notes && (
+                                <p>
+                                  <span className="font-medium">Примечания:</span>{" "}
+                                  {appointment.notes}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="flex space-x-2">
+                            <Button variant="outline" size="sm">
+                              Редактировать
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className={
+                                appointment.status === "completed"
+                                  ? "text-red-600 hover:text-red-700"
+                                  : "text-green-600 hover:text-green-700"
+                              }
                             >
-                              {getStatusText(appointment.status)}
-                            </span>
+                              {appointment.status === "completed"
+                                ? "Отменить"
+                                : "Выполнено"}
+                            </Button>
                           </div>
-
-                          <div className="text-gray-900">
-                            <p className="font-medium">{appointment.clientName}</p>
-                            <p className="text-sm text-gray-600">
-                              {appointment.clientPhone}
-                            </p>
-                          </div>
-
-                          <div className="text-sm">
-                            <p><span className="font-medium">Услуга:</span> {appointment.serviceName}</p>
-                            <p><span className="font-medium">Мастер:</span> {appointment.employeeName}</p>
-                            {appointment.notes && (
-                              <p><span className="font-medium">Примечания:</span> {appointment.notes}</p>
-                            )}
-                          </div>
-                        </div>
-
-                        <div className="flex space-x-2">
-                          <Button variant="outline" size="sm">
-                            Редактировать
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className={
-                              appointment.status === "completed"
-                                ? "text-red-600 hover:text-red-700"
-                                : "text-green-600 hover:text-green-700"
-                            }
-                          >
-                            {appointment.status === "completed" ? "Отменить" : "Выполнено"}
-                          </Button>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
 
-                  {mockAppointments.length === 0 && (
+                  {appointments.filter(
+                    (appointment) =>
+                      appointment.date.toDateString() ===
+                      selectedDate.toDateString()
+                  ).length === 0 && (
                     <div className="text-center py-8 text-gray-500">
                       Нет записей на выбранную дату
                     </div>
