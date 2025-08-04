@@ -161,7 +161,7 @@ export default function SettingsPage() {
                 <p className="text-sm text-gray-600 mb-3">
                   Выберите тему интерфейса приложения
                 </p>
-                <Select value={theme} onValueChange={(value: string) => setTheme(value)}>
+                <Select value={theme} onValueChange={(value: "light" | "dark" | "black") => setTheme(value)}>
                   <SelectTrigger className="w-64">
                     <SelectValue />
                   </SelectTrigger>
