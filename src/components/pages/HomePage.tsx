@@ -123,7 +123,7 @@ export default function HomePage() {
               <CardTitle className="text-lg">Смена</CardTitle>
             </CardHeader>
             <CardContent>
-              <Select value={selectedShift} onValueChange={(value: string) => setSelectedShift(value)}>
+              <Select value={selectedShift} onValueChange={(value: "all" | "morning" | "evening") => setSelectedShift(value)}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
